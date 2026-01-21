@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Pro</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <h1><b>Book Pro</b></h1>
+    <nav>
+      <a href="#">Our business</a>
+      <a href="#">Shortcode</a>
+      <a href="#">Member Account</a>
+    </nav>
+  </header>
+
+  <div class="main-container">
+
+    <div class="leftsection">
+
+      <div class="slider">
+        <img src="images/pic1.jpg" class="slide active" alt="Image 1">
+        <img src="images/pic2.png" class="slide" alt="Image 2">
+        <img src="images/pic3.png" class="slide" alt="Image 3">
+        <img src="images/pic4.png" class="slide" alt="Image 4">
+      </div>
+
+      <div class="navigation-button">
+        <span class="dot active" data-slide="0"></span>
+        <span class="dot" data-slide="1"></span>
+        <span class="dot" data-slide="2"></span>
+        <span class="dot" data-slide="3"></span>
+      </div>
+      <div id="business-wrapper">
+      <div class="salon-header">
+        <div>
+          <h1 id="top-business-name"></h1>
+          <p id="top-business-address"></p>
+        </div>
+
+        <div class="salon-icons">
+          <span class="icon-btn">♡</span>
+          <span class="icon-btn">⤴</span>
+        </div>
+      </div>
+    </div>
+
+      <div class="section">
+        <h2>Services</h2>
+        <div class="service-search">
+          <input type="text" id="serviceSearch" placeholder="Search for service" />
+          <span class="search-icon">🔍</span>
+        </div>
+        <div id="categories"></div>
+      </div>
+
+    </div>
+
+    <div class="rightsection">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31097.55217744143!2d80.2209766!3d13.023313199999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267a9a9f1f20b%3A0xd7d88ee37eba2e41!2sGuindy%20Railway%20Station%20Bus%20Stop!5e0!3m2!1sen!2sin!4v1768291594916!5m2!1sen!2sin"
+        class="map-frame"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+      <h3>About Us</h3>
+      <p id="business-about"></p><br>
+
+      <p id="business-contact"></p><br>
+
+      <h3>Working Hours</h3>
+      <div id="business-hours" class="hours-box"></div>
+
+      <p id="business-socialMedia"></p>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>Copyright &copy;2026 BookPro</p>
+  </footer>
+
+  <div id="modalStep1" class="modal">
+    <div class="modal-content modal-scroll">
+      <span class="close-btn closeAll">&times;</span>
+
+      <h2 class="modal-title">Booking Details</h2>
+
+      <div class="date-slider">
+        <button class="arrow-btn" id="datePrev">‹</button>
+        <div class="date-cards" id="dateCards"></div>
+        <button class="arrow-btn" id="dateNext">›</button>
+      </div>
+
+      <div class="summary-box">
+        <p><b>Date:</b> <span id="s_date"></span></p>
+        <p><b>Selected Time:</b> <span id="s_selectedTime">--</span></p>
+      </div>
+
+      <div class="time-tabs">
+        <button class="tab-btn active" data-session="morning">Morning</button>
+        <button class="tab-btn" data-session="afternoon">Afternoon</button>
+        <button class="tab-btn" data-session="evening">Evening</button>
+      </div>
+
+      <div class="time-slot-area">
+        <button class="arrow-btn" id="timePrev">‹</button>
+        <div class="time-slots" id="timeSlots"></div>
+        <button class="arrow-btn" id="timeNext">›</button>
+      </div>
+
+      <div class="selected-services-box">
+        <div class="selected-title">Selected Services</div>
+        <div id="selectedServicesList"></div>
+      </div>
+
+      <button class="btn-outline" id="addAnotherService">+ Add Another Service</button>
+
+      <div class="totals-box">
+        <div class="trow"><span>Subtotal</span><span id="subtotalVal">$0.00</span></div>
+        <div class="trow"><span>System Fee (2%)</span><span id="systemFeeVal">$0.00</span></div>
+        <div class="trow"><span>Tax (10%)</span><span id="taxVal">$0.00</span></div>
+        <div class="trow total"><span>Total</span><span id="totalVal">$0.00</span></div>
+        <div class="duration-line"><b>Total Duration:</b> <span id="totalDurationText">0 min</span></div>
+      </div>
+
+      <button class="btn-primary" id="continueStep1">Continue</button>
+    </div>
+        </div>
+
+  </div>
+  <div id="modalStep2" class="modal">
+    <div class="modal-content modal-scroll">
+      <span class="close-btn closeAll">&times;</span>
+
+      <h2 class="modal-title">Enter Your Details</h2>
+
+      <div class="summary-box">
+        <p><b>Services:</b> <span id="f_services"></span></p>
+        <p><b>Staff:</b> <span id="f_staff"></span></p>
+        <p><b>Date:</b> <span id="f_date"></span> | <b>Time:</b> <span id="f_time"></span></p>
+      </div>
+
+      <label>Name</label>
+      <input type="text" id="custName" placeholder="Enter your name" />
+      <small class="error-text" id="errName"></small>
+
+      <label>Mobile Number</label>
+      <input type="text" id="custPhone" placeholder="Enter mobile number" />
+      <small class="error-text" id="errPhone"></small>
+
+      <label>Note</label>
+      <textarea id="custNote" placeholder="Enter note"></textarea>
+      <small class="error-text" id="errNote"></small>
+
+      <div class="payment-options">
+        <p><b>Payment options</b></p>
+        <label class="radio-row">
+          <input type="radio" name="payment" value="offline">
+          <span>Offline</span>
+        </label>
+        <label class="radio-row">
+          <input type="radio" name="payment" value="Woocommerce">
+          <span>Woocommerce</span>
+        </label>
+        <label class="radio-row">
+          <input type="radio" name="payment"value="paypal">
+          <span>Paypal</span>
+        </label>
+        <label class="radio-row">
+          <input type="radio" name="payment" value="stripe">
+          <span>Stripe</span>
+        </label>
+      </div>
+      <button class="btn-primary" id="continueStep2">Continue</button>
+
+  </div>
+</div>
+<div id="servicePopup" class="modal">
+  <div class="modal-content modal-scroll">
+    <span class="close-btn" id="closeServicePopup">&times;</span>
+    <h2 class="modal-title">Add Services</h2>
+        <div class="service-search">
+        <input type="text" id="serviceSearch" placeholder="Search for service" />
+        <span class="search-icon">🔍</span>
+        </div>
+    <div id="popupCategories"></div>
+  </div>
+</div>
+<div id="staffPopup" class="modal">
+  <div class="modal-content modal-scroll staff-modal">
+    <span class="close-btn" id="closeStaffPopup">&times;</span>
+
+    <h2 class="modal-title">Staff List</h2>
+
+    <div id="staffList"></div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+      let activeServiceIndex = null;
+      let bookingTimerStarted = false;
+      let bookingTimeLeft = 3600; 
+      let bookingTimerInterval = null;
+
+      function startBookingTimer() {
+        if (bookingTimerStarted) return;
+        bookingTimerStarted = true;
+
+        $("#paymentTimerBar").fadeIn();
+
+        bookingTimerInterval = setInterval(function () {
+          let minutes = Math.floor(bookingTimeLeft / 60);
+          let seconds = bookingTimeLeft % 60;
+
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          $("#timerDisplay").text(minutes + ":" + seconds);
+
+          if (bookingTimeLeft <= 0) {
+            clearInterval(bookingTimerInterval);
+            $("#timerDisplay").text("00:00");
+            alert("Booking time expired!");
+          }
+
+          bookingTimeLeft--;
+        }, 1000);
+      }
+
+  $("#modalStep1, #modalStep2,#servicePopup,#staffPopup").hide();
+  $("body").css("overflow", "auto");
+
+      let currentSlide = 0;
+      const slides = $(".slide");
+      const dots = $(".dot");
+
+      function showSlide(index) {
+        slides.removeClass("active");
+        dots.removeClass("active");
+        slides.eq(index).addClass("active");
+        dots.eq(index).addClass("active");
+      }
+      dots.click(function () {
+        currentSlide = $(this).data("slide");
+        showSlide(currentSlide);
+      });
+
+      let booking = {
+        services: [],
+        dateText: "",
+        selectedDateISO: "",
+        selectedSession: "morning",
+        selectedTime: "",
+        endTime: "",
+        staffId: "",
+        staffName: "",
+        subtotal: 0,
+        systemFee: 0,
+        tax: 0,
+        total: 0,
+        customerName: "",
+        customerPhone: "",
+        customerNote: ""
+      };
+
+      function dateISO(d) {
+        return d.toISOString().split("T")[0];
+      }
+
+      function renderDateCards() {
+        const $cards = $("#dateCards");
+        $cards.empty();
+
+        const today = new Date();
+
+        for (let i = 0; i < 14; i++) {
+          const d = new Date(today);
+          d.setDate(today.getDate() + i);
+          const iso = dateISO(d);
+          const day = d.toLocaleString("en-US", { weekday: "short" });
+          const dateNum = d.getDate();
+
+          $cards.append(`
+            <button class="date-card" data-iso="${iso}">
+              <div class="dc-date">${dateNum}</div>
+              <div class="dc-day">${day}</div>
+            </button>
+          `);
+        }
+
+        if (!booking.selectedDateISO) {
+          booking.selectedDateISO = dateISO(today);
+          booking.dateText = today.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+          $("#s_date").text(booking.dateText);
+        }
+
+        $(".date-card").removeClass("active");
+        $(`.date-card[data-iso="${booking.selectedDateISO}"]`).addClass("active");
+      }
+
+      function generateTimeSlots(session) {
+        if (session === "morning") return ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM"];
+        if (session === "afternoon") return ["12:00 PM","12:30 PM","01:00 PM","01:30 PM","02:00 PM","02:30 PM","03:00 PM","03:30 PM"];
+        return ["04:00 PM","04:30 PM","05:00 PM","05:30 PM","06:00 PM","06:30 PM","07:00 PM"];
+      }
+
+      function totalDurationMinutes() {
+        let total = 0;
+        booking.services.forEach(s => total += Number(s.durationMinutes || 0));
+        return total;
+      }
+
+      function to24Hour(timeStr) {
+        const [time, meridian] = timeStr.split(" ");
+        let [h, m] = time.split(":").map(Number);
+        if (meridian === "PM" && h !== 12) h += 12;
+        if (meridian === "AM" && h === 12) h = 0;
+        return { h, m };
+      }
+
+      function to12Hour(h, m) {
+        const meridian = h >= 12 ? "PM" : "AM";
+        let hour = h % 12;
+        if (hour === 0) hour = 12;
+        return String(hour).padStart(2, "0") + ":" + String(m).padStart(2, "0") + " " + meridian;
+      }
+
+      function addMinutesToTime(timeStr, minutesToAdd) {
+        const t = to24Hour(timeStr);
+        let totalMins = (t.h * 60 + t.m + minutesToAdd) % (24 * 60);
+        const newH = Math.floor(totalMins / 60);
+        const newM = totalMins % 60;
+        return to12Hour(newH, newM);
+      }
+
+      function addMinutesTo24Time(h, m, minutesToAdd) {
+        let total = h * 60 + m + minutesToAdd;
+        return {
+          h: Math.floor(total / 60) % 24,
+          m: total % 60
+        };
+      }
+
+      function format12(h, m) {
+        const meridian = h >= 12 ? "PM" : "AM";
+        let hour = h % 12 || 12;
+        return (
+          String(hour).padStart(2, "0") +
+          ":" +
+          String(m).padStart(2, "0") +
+          " " +
+          meridian
+        );
+      }
+      function updateSelectedTimeUI() {
+        if (!booking.selectedTime) {
+          $("#s_selectedTime").text("--");
+          return;
+        }
+        const duration = totalDurationMinutes();
+        booking.endTime = addMinutesToTime(booking.selectedTime, duration);
+        $("#s_selectedTime").text(booking.selectedTime + " - " + booking.endTime);
+      }
+
+      function renderTimeSlots(session) {
+        booking.selectedSession = session;
+        $("#timeSlots").empty();
+
+        generateTimeSlots(session).forEach(time => {
+          $("#timeSlots").append(`<button class="time-btn" data-time="${time}">${time}</button>`);
+        });
+
+        booking.selectedTime = "";
+        booking.endTime = "";
+        $("#s_selectedTime").text("--");
+      }
+
+      function calculateTotals() {
+        booking.subtotal = 0;
+        booking.services.forEach(s => booking.subtotal += Number(s.price || 0));
+        booking.systemFee = booking.subtotal * 0.02;
+        booking.tax = booking.subtotal * 0.10;
+        booking.total = booking.subtotal + booking.systemFee + booking.tax;
+      }
+
+      function renderSelectedServices() {
+        $("#selectedServicesList").empty();
+
+        if (booking.services.length === 0) {
+          $("#selectedServicesList").html(`<p class="empty-text">No service selected</p>`);
+          $("#totalDurationText").text("0 min");
+          return;
+        }
+
+        let currentStart = booking.selectedTime
+          ? to24Hour(booking.selectedTime)
+          : null;
+
+        booking.services.forEach((s, index) => {
+          let timeText = "--";
+
+          if (currentStart) {
+            const end = addMinutesTo24Time(
+              currentStart.h,
+              currentStart.m,
+              Number(s.durationMinutes)
+            );
+
+            s.startTime = format12(currentStart.h, currentStart.m);
+            s.endTime = format12(end.h, end.m);
+
+            timeText = `${s.startTime} - ${s.endTime}`;
+
+            currentStart = end;
+          }
+
+          $("#selectedServicesList").append(`
+            <div class="selected-service-row">
+              <div>
+                <div class="ss-name">${s.name}</div>
+                <div class="ss-meta">${timeText}</div>
+
+                <div class="staff-picker per-service" data-index="${index}">
+                  ${s.staffName || "Select Staff"}
+                </div>
+              </div>
+              <div class="ss-right">
+                <div class="ss-price">${s.priceText}</div>
+                <button class="remove-btn" data-index="${index}">Remove</button>
+              </div>
+            </div>
+          `);
+        });
+
+        $("#totalDurationText").text(totalDurationMinutes() + " min");
+      }
+
+      function updateTotalsUI() {
+        $("#subtotalVal").text("$" + booking.subtotal.toFixed(2));
+        $("#systemFeeVal").text("$" + booking.systemFee.toFixed(2));
+        $("#taxVal").text("$" + booking.tax.toFixed(2));
+        $("#totalVal").text("$" + booking.total.toFixed(2));
+      }
+
+      function formatPrice(service) {
+        switch (service.priceType) {
+          case "fixed": return "$" + service.price;
+          case "free": return "Free";
+          case "starting_from": return "From $" + service.price;
+          case "hidden": return "";
+          default: return "Varies";
+        }
+      }
+
+      function renderBusiness(business) {
+        $("#top-business-name").text(business.name || "");
+
+        if (business.address) {
+          $("#top-business-address").text(
+            (business.address.street || "") + ", " +
+            (business.address.city || "") + ", " +
+            (business.address.state || "") + ", " +
+            (business.address.zip || "")
+          );
+        }
+
+        $("#business-about").text(business.about || "");
+        if (business.contact && business.contact.phone) {
+          $("#business-contact").html("<b>Contact:</b> " + business.contact.phone +"<br>");
+        }
+        if (business.socialMedia) {
+          $("#business-socialMedia").html(
+            "<b>Social:</b> <br>" +
+            (business.socialMedia.facebook || "") + "<br> " +
+            (business.socialMedia.tiktok || "") + " <br>" +
+            (business.socialMedia.youtube || "")
+          );
+        }
+       let hoursHTML = "";
+
+          if (business.businessHours) {
+            $.each(business.businessHours, function (day, slots) {
+
+              hoursHTML += `
+                <div class="hours-row">
+                  <div class="hours-day">${day}</div>
+                  <div class="hours-time">
+              `;
+
+              if (Array.isArray(slots) && slots.length) {
+                slots.forEach(slot => {
+                  if (slot.open && slot.close) {
+                    hoursHTML += `<div>${slot.open} - ${slot.close}</div>`;
+                  }
+                });
+              } else {
+                hoursHTML += `<div>Closed</div>`;
+              }
+
+              hoursHTML += `
+                  </div>
+                </div>
+              `;
+            });
+          }
+
+          $("#business-hours").html(hoursHTML);
+      }
+      function renderCategories(categories) {
+        $("#categories").empty();
+
+        $.each(categories, function (index, category) {
+          const categoryId = "category-services-" + index;
+
+      const serviceCount = category.services.length;
+
+      $("#categories").append(`
+        <div class="category">
+          <div class="category-header" data-target="${categoryId}">
+            <div class="category-left">
+              <span class="toggle-arrow">›</span>
+              <h3>${category.name}</h3>
+            </div>
+            <span class="service-count">${serviceCount} Services</span>
+          </div>
+          <div class="services-list" id="${categoryId}"></div>
+        </div>
+      `);
+
+          const $servicesWrapper = $("#" + categoryId);
+
+          $.each(category.services, function (_, service) {
+            const priceText = formatPrice(service);
+
+            const packedService = JSON.stringify({
+              id: service.id,
+              name: service.name,
+              durationMinutes: service.durationMinutes,
+              price: service.price || 0,
+              priceText: priceText
+            });
+
+            $servicesWrapper.append(`
+              <div class="service-row">
+                
+                <div class="service-left">
+                  <div class="service-name">${service.name}</div>
+                  ${service.description ? `<div class="service-desc">${service.description}</div>` : ""}
+                </div>
+
+                <div class="service-right">
+                  <div class="service-price">${priceText || ""}</div>
+                  <div class="service-duration">${service.durationMinutes}min</div>
+                </div>
+
+                <button class="book-btn" data-service='${packedService}'>Book</button>
+
+              </div>
+            `);
+          });
+        });
+
+        $(".category-header").off("click").on("click", function () {
+          const target = $(this).data("target");
+          $("#" + target).slideToggle();
+          $(this).find(".toggle-arrow").toggleClass("open");
+        });
+      }
+      function renderPopupCategories(categories) {
+        $("#popupCategories").empty();
+
+        $.each(categories, function (index, category) {
+          const catId = "popup-cat-" + index;
+
+          $("#popupCategories").append(`
+            <div class="category">
+              <div class="category-header" data-target="${catId}">
+                <div class="category-left">
+                  <span class="toggle-arrow">›</span>
+                  <h3>${category.name}</h3>
+                </div>
+                <span class="service-count">${category.services.length} Services</span>
+              </div>
+              <div class="services-list" id="${catId}"></div>
+            </div>
+          `);
+
+          category.services.forEach(service => {
+            const priceText = formatPrice(service);
+
+            const packedService = JSON.stringify({
+              id: service.id,
+              name: service.name,
+              durationMinutes: service.durationMinutes,
+              price: service.price || 0,
+              priceText: priceText
+            });
+
+            $("#" + catId).append(`
+              <div class="service-row">
+                <div class="service-left">
+                  <div class="service-name">${service.name}</div>
+                  ${service.description ? `<div class="service-desc">${service.description}</div>` : ""}
+                </div>
+
+                <div class="service-right">
+                  <div class="service-price">${priceText}</div>
+                  <div class="service-duration">${service.durationMinutes}min</div>
+                </div>
+
+                <button class="book-btn popup-book" data-service='${packedService}'>
+                  Add
+                </button>
+              </div>
+            `);
+          });
+        });
+
+      $(".category-header").off().on("click", function () {
+        $("#" + $(this).data("target")).slideToggle();
+        $(this).find(".toggle-arrow").toggleClass("open");
+      });
+    }
+
+      function renderStaffPopup(staff) {
+        $("#staffList").empty();
+
+        staff.forEach(s => {
+          $("#staffList").append(`
+            <div class="staff-row" data-id="${s.id}" data-name="${s.name}">
+              <img src="${s.image || 'https://via.placeholder.com/50'}">
+              <span>${s.name}</span>
+            </div>
+          `);
+        });
+      }
+
+      $.ajax({
+        url: "https://hareharanphp.shop.digitalwording.co.in/api/protected",
+        method: "GET",
+        dataType: "json",
+        headers: {
+          "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        },
+        success: function (data) {
+          renderBusiness(data.business);
+          renderCategories(data.categories);
+          renderPopupCategories(data.categories);
+          renderStaffPopup(data.staff || []);
+        }
+      });
+
+      $(document).on("click", ".date-card", function () {
+        $(".date-card").removeClass("active");
+        $(this).addClass("active");
+
+        booking.selectedDateISO = $(this).data("iso");
+        const selectedDate = new Date(booking.selectedDateISO + "T00:00:00");
+        booking.dateText = selectedDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+        $("#s_date").text(booking.dateText);
+      });
+
+      $("#dateNext").click(function () {
+        $("#dateCards").animate({ scrollLeft: "+=200" }, 200);
+      });
+
+      $("#datePrev").click(function () {
+        $("#dateCards").animate({ scrollLeft: "-=200" }, 200);
+      });
+
+      $(document).on("click", ".tab-btn", function () {
+        $(".tab-btn").removeClass("active");
+        $(this).addClass("active");
+        renderTimeSlots($(this).data("session"));
+      });
+
+      $("#timeNext").click(function () {
+        $("#timeSlots").animate({ scrollLeft: "+=200" }, 200);
+      });
+
+      $("#timePrev").click(function () {
+        $("#timeSlots").animate({ scrollLeft: "-=200" }, 200);
+      });
+
+      $(document).on("click", ".time-btn", function () {
+        $(".time-btn").removeClass("active");
+        $(this).addClass("active");
+
+        booking.selectedTime = $(this).data("time");
+
+        booking.endTime = addMinutesToTime(
+          booking.selectedTime,
+          totalDurationMinutes()
+        );
+
+        $("#s_selectedTime").text(
+          booking.selectedTime + " - " + booking.endTime
+        );
+
+        renderSelectedServices();
+      });
+
+
+      $(document).on("click", ".book-btn", function () {
+        const service = JSON.parse($(this).attr("data-service"));
+
+        if (booking.services.length === 0) {
+          renderDateCards();
+          $(".tab-btn").removeClass("active");
+          $('.tab-btn[data-session="morning"]').addClass("active");
+          renderTimeSlots("morning");
+          booking.selectedTime = "";
+          booking.endTime = "";
+          $("#s_selectedTime").text("--");
+        }
+
+        const already = booking.services.find(
+          s =>
+            s.name.trim().toLowerCase() === service.name.trim().toLowerCase() &&
+            Number(s.durationMinutes) === Number(service.durationMinutes)
+        );
+        if (already) return;
+
+          service.staffId = "";
+          service.staffName = "";
+          service.startTime = "";
+          service.endTime = "";
+          booking.services.push(service);
+
+        calculateTotals();
+        renderSelectedServices();
+        updateTotalsUI();
+        $("#staffSelect").val("");
+        $("#modalStep1").fadeIn();
+      });
+      $(document).on("click", ".staff-picker.per-service", function () {
+        activeServiceIndex = $(this).data("index");
+
+        $("#modalStep1").hide();
+        $("#staffPopup").show();
+        $("body").css("overflow", "hidden");
+      });
+
+      $(document).on("click", ".popup-book", function () {
+        const service = JSON.parse($(this).attr("data-service"));
+
+        const exists = booking.services.find(
+          s =>
+            s.name.trim().toLowerCase() === service.name.trim().toLowerCase() &&
+            Number(s.durationMinutes) === Number(service.durationMinutes)
+        );
+
+        if (!exists) {
+          booking.services.push(service);
+
+          calculateTotals();
+          renderSelectedServices();
+          updateTotalsUI();
+        }
+        $("#servicePopup").hide();
+
+        setTimeout(() => {
+          $("#modalStep1").show();
+          $("body").css("overflow", "hidden");
+        }, 30);
+      });
+      $("#staffPicker").on("click", function () {
+        $("#modalStep1").hide();
+        $("#staffPopup").show();
+        $("body").css("overflow", "hidden");
+      });
+
+      $(document).on("click", ".staff-row", function () {
+
+        const staffId = $(this).data("id");
+        const staffName = $(this).data("name");
+
+        if (activeServiceIndex !== null) {
+          booking.services[activeServiceIndex].staffId = staffId;
+          booking.services[activeServiceIndex].staffName = staffName;
+        }
+
+        $("#staffPopup").hide();
+
+        setTimeout(() => {
+          $("#modalStep1").show();
+          $("body").css("overflow", "hidden");
+        }, 50);
+
+        renderSelectedServices();
+      });
+
+      $(document).on("click", ".remove-btn", function () {
+        const index = $(this).data("index");
+        booking.services.splice(index, 1);
+
+        calculateTotals();
+        renderSelectedServices();
+        updateTotalsUI();
+      });
+      $("#addAnotherService").click(function () {
+        $("#modalStep1").hide();
+        $("#servicePopup").show();
+        $("body").css("overflow", "hidden");
+      });
+
+      $("#closeServicePopup").click(function () {
+        $("#servicePopup").hide();
+        $("#modalStep1").show();
+      });
+
+      $("#continueStep1").click(function () {
+
+        if (booking.services.length === 0) {
+          alert("Please select at least one service!");
+          return;
+        }
+        if (!booking.selectedDateISO) {
+          alert("Please select date!");
+          return;
+        }
+        if (!booking.selectedTime) {
+          alert("Please select time slot!");
+          return;
+        }
+        const missingStaff = booking.services.find(s => !s.staffName);
+        if (missingStaff) {
+          alert("Please select staff for all services!");
+          return;
+        }
+
+        $("#f_services").text(
+          booking.services
+            .map(s => `${s.name} (${s.staffName})`)
+            .join(", ")
+        );
+
+        $("#f_staff").text("Multiple staff");
+
+        $("#f_date").text(booking.dateText);
+        $("#f_time").text(
+          booking.services
+            .map(s => `${s.name}: ${s.startTime} - ${s.endTime}`)
+            .join(" | ")
+        );
+
+        $("#custName").val("");
+        $("#custPhone").val("");
+        $("#custNote").val("");
+        $("#errName, #errPhone, #errNote").text("");
+
+        startBookingTimer();
+
+        $("#modalStep1").hide();
+        $("#modalStep2").fadeIn();
+      });
+
+      function validateForm() {
+        let ok = true;
+
+        const name = $("#custName").val().trim();
+        const phone = $("#custPhone").val().trim();
+        const note = $("#custNote").val().trim();
+
+        $("#errName").text("");
+        $("#errPhone").text("");
+        $("#errNote").text("");
+
+        if (name.length < 3) {
+          $("#errName").text("Name must be at least 3 letters");
+          ok = false;
+        }
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+          $("#errPhone").text("Enter valid 10 digit mobile number");
+          ok = false;
+        }
+
+        if (note.length > 200) {
+          $("#errNote").text("Note max 200 characters");
+          ok = false;
+        }
+
+        if (ok) {
+          booking.customerName = name;
+          booking.customerPhone = phone;
+          booking.customerNote = note;
+        }
+        return ok;
+      }
+
+$("#continueStep2").click(function () {
+  if (!validateForm()) return;
+  $("#bookingTimer").fadeOut();
+  const selectedPayment = $('input[name="payment"]:checked').val();
+  if (!selectedPayment) {
+    alert("Please select a payment option");
+    return;
+  }
+
+  const bookingData = {
+    services: booking.services,
+    staff: booking.staffName,
+    date: booking.dateText,
+    time: booking.selectedTime + " - " + booking.endTime,
+    name: booking.customerName,
+    phone: booking.customerPhone,
+    note: booking.customerNote,
+    payment: selectedPayment,
+    subtotal: booking.subtotal,
+    systemFee: booking.systemFee,
+    tax: booking.tax,
+    total: booking.total
+  };
+
+  sessionStorage.setItem("bookingData", JSON.stringify(bookingData));
+  window.location.href = "thankyou.html";
+});
+
+$("#doneBtn").click(function () {
+  $("#modalStep1, #modalStep2").fadeOut();
+
+  booking = {
+    services: [],
+    dateText: "",
+    selectedDateISO: "",
+    selectedSession: "morning",
+    selectedTime: "",
+    endTime: "",
+    staffId: "",
+    staffName: "",
+    subtotal: 0,
+    systemFee: 0,
+    tax: 0,
+    total: 0,
+    customerName: "",
+    customerPhone: "",
+    customerNote: ""
+  };
+
+  $("#selectedServicesList").empty();
+  $("#subtotalVal").text("$0.00");
+  $("#systemFeeVal").text("$0.00");
+  $("#taxVal").text("$0.00");
+  $("#totalVal").text("$0.00");
+  $("#totalDurationText").text("0 min");
+  $("#s_selectedTime").text("--");
+  $("#s_date").text("");
+
+  $("body").css("overflow", "auto");
+
+  $("#paymentTimerBar").hide();
+  clearInterval(bookingTimerInterval);
+  bookingTimerStarted = false;
+});
+      $(document).on("click", ".closeAll", function () {
+        $("#modalStep1, #modalStep2").fadeOut();
+          $("#paymentTimerBar").hide();
+          clearInterval(bookingTimerInterval);
+          bookingTimerStarted = false;
+      });
+    $("#timerDisplay").text(minutes + ":" + seconds);
+});
+</script>
+<div id="paymentTimerBar">
+  Time left to pay: <span id="timerDisplay">00:59:49</span>
+</div>
+</body>
+</html>

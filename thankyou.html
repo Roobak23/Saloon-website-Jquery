@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thank you</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="thankyou-page">
+
+<h1>Thank you</h1>
+
+<div class="thankyou-container">
+
+  <table class="info-table">
+    <tbody id="bookingInfo"></tbody>
+
+    <tr>
+      <th>Booking Items</th>
+      <td>
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Service Name</th>
+              <th>Time</th>
+              <th>Staff</th>
+              <th>Total</th>
+              <th>Tax</th>
+            </tr>
+          </thead>
+          <tbody id="bookingItems"></tbody>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <table class="totals-table">
+    <tbody id="bookingTotals"></tbody>
+  </table>
+
+  <div>
+    <button class="btn-fun">Download Invoice</button>
+    <button class="btn-fun">Add Google Calendar</button>
+    <button class="btn-fun">Add iCal</button>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+  const data = sessionStorage.getItem("bookingData");
+  if (!data) {
+    window.location.href = "index.html";
+    return;
+  }
+  const booking = JSON.parse(data);
+
+  $("#bookingInfo").html(`
+    <tr><th>Name</th><td>${booking.name}</td></tr>
+    <tr><th>Phone</th><td>${booking.phone}</td></tr>
+    <tr><th>Note</th><td>${booking.note || ""}</td></tr>
+    <tr><th>Date Created</th><td>${booking.date}</td></tr>
+    <tr><th>Vendor</th><td>admin</td></tr>
+    <tr><th>Business</th><td>Nice Salon</td></tr>
+    <tr><th>Payment Method</th><td>${booking.payment}</td></tr>
+    <tr><th>Booking Status</th><td>Completed</td></tr>
+  `);
+
+  let itemsHTML = "";
+  booking.services.forEach(service => {
+    itemsHTML += `
+      <tr>
+        <td>${service.name}</td>
+        <td>${service.startTime} - ${service.endTime}</td>
+        <td>${service.staffName}</td>
+        <td>$${service.price.toFixed(2)}</td>
+        <td>VAT: $${(service.price * 0.10).toFixed(2)}</td>
+      </tr>
+    `;
+  });
+  $("#bookingItems").html(itemsHTML);
+
+  $("#bookingTotals").html(`
+    <tr><th>Subtotal</th><td>$${booking.subtotal.toFixed(2)}</td></tr>
+    <tr><th>System Fee</th><td>$${booking.systemFee.toFixed(2)}</td></tr>
+    <tr><th>Tax</th><td>$${booking.tax.toFixed(2)}</td></tr>
+    <tr class="grand-total"><th>Total</th><td>$${booking.total.toFixed(2)}</td></tr>
+  `);
+
+});
+</script>
+
+</body>
+</html>
